@@ -1,21 +1,25 @@
 package main;
 
+import java.util.Optional;
+
 import clases.Flujo;
-import clases.MyAppUtils;
 
 
-public class App_no_static {
+public class App_first {
 
 	// Pseudo-main. Constructor de la clase.
-	public App_no_static() {
+	public App_first() {
 		
-		String result = 
+		Optional<Integer> result = 
 				Flujo.iterate(1, 5, this::quintupleMasUno)
-				.filtrar(this::esPar)
-				.transformar(this::conGuiones)
-				.reducirDesdeFinal("", this::concatenar);
+				.find(this::esPar);
+
+		if(result.isPresent()) {
+			System.out.println(result.get());
+		} else {
+			System.out.println("No existe ningún elemento que cumpla con el predicado.");
+		}
 		
-		System.out.println(result);
 
 	} // end app
 	
@@ -34,7 +38,7 @@ public class App_no_static {
 	}
 	
 	public String concatenar(String valor1, String valor2) {
-		return valor1 + valor2;
+		return valor1.concat(valor2);
 	}
 	
 	// Se llama al constructor de la clase.
@@ -45,6 +49,6 @@ public class App_no_static {
 					.dropWhile(valor -> valor % 2.0 == 0);
 		
 		System.out.println(flujo);
-		new App_no_static();
+		new App_first();
 	}
 }

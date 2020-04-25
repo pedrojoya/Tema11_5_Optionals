@@ -1,21 +1,25 @@
 package main;
 
+import java.util.Optional;
+
 import clases.Flujo;
-import clases.MyAppUtils;
 
 
-public class App_no_static_concact {
+public class App_last {
 
 	// Pseudo-main. Constructor de la clase.
-	public App_no_static_concact() {
+	public App_last() {
 		
-		String result = 
+		Optional<Integer> result = 
 				Flujo.iterate(1, 5, this::quintupleMasUno)
-				.filtrar(this::esPar)
-				.transformar(this::conGuiones)
-				.reducirDesdeFinal("", this::concatenar);
+				.findLast(this::esPar);
+
+		if(result.isPresent()) {
+			System.out.println(result.get());
+		} else {
+			System.out.println("No existe ningún elemento que cumpla con el predicado.");
+		}
 		
-		System.out.println(result);
 
 	} // end app
 	
@@ -45,6 +49,6 @@ public class App_no_static_concact {
 					.dropWhile(valor -> valor % 2.0 == 0);
 		
 		System.out.println(flujo);
-		new App_no_static_concact();
+		new App_last();
 	}
 }

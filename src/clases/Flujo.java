@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.ListIterator;
+import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Flujo<T> {
@@ -27,6 +28,33 @@ public class Flujo<T> {
 			}
 		}
 		return result;
+	}
+	
+	public Optional<T> find(Predicate<T> predicado) {
+		T result = null;
+		
+		for (T v : valores) {
+			if (predicado.test(v)) {
+				result = v;
+				break;
+			}
+		}
+		
+		return result != null ? Optional.of(result) : 
+								Optional.empty();
+	}
+	
+	public Optional<T> findLast(Predicate<T> predicado) {
+		T result = null;
+		
+		for (T v : valores) {
+			if (predicado.test(v)) {
+				result = v;
+			}
+		}
+		
+		return result != null ? Optional.of(result) : 
+								Optional.empty();
 	}
 
 	public boolean allMatch(Predicate<T> predicado) {
